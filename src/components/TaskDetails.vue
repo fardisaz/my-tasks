@@ -15,7 +15,6 @@
   </div>
 </template>
 <script setup>
-import { defineProps } from "vue";
 import { useTaskStore } from "../stores/TaskStore";
 defineProps({
   task: {
