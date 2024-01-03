@@ -5,18 +5,18 @@
       <img src="./assets/Pinialogo.svg" alt="pinia logo" />
       <h1>My Tasks</h1>
     </header>
-
     <!-- new task form -->
     <div class="new-task-form">
       <TaskForm />
     </div>
-    <!-- filter -->
+    <!-- filter & reset -->
     <nav class="filter">
+      <button @click="taskStore.$reset">reset state</button>
       <button @click="filter = 'all'">All tasks</button>
       <button @click="filter = 'favs'">Favorite tasks</button>
     </nav>
     <!-- loading -->
-    <div class="loading" v-if="loading">Loading tasks...</div>
+    <!-- <div class="loading" v-if="loading">Loading tasks...</div> -->
     <!-- task list -->
     <div class="task-list" v-if="filter === 'all'">
       <p>You have {{ totalCount }} tasks left to do</p>
@@ -31,7 +31,6 @@
         <TaskDetails :task="task" />
       </div>
     </div>
-    <button @click="taskStore.$reset">reset state</button>
   </main>
 </template>
 <script setup>
