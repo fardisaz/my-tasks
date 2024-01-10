@@ -28,10 +28,11 @@ const selectOption = () => {
 </script>
 <style scoped>
 select {
-  border: 2px solid #555;
-  border-radius: 4px;
+  border: 0;
+  border-radius: 6px;
   font-size: 1em;
   cursor: pointer;
   background-color: #ffd859;
+  padding: 3px 8px;
 }
 </style>
