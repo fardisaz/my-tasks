@@ -9,28 +9,33 @@
     <div class="new-task-form">
       <TaskForm />
     </div>
-    <!-- filter & reset -->
-    <nav class="filter">
-      <button @click="taskStore.$reset">reset state</button>
-      <button @click="filter = 'all'">All tasks</button>
-      <button @click="filter = 'favs'">Favorite tasks</button>
-    </nav>
+
     <!-- loading -->
     <!-- <div class="loading" v-if="loading">Loading tasks...</div> -->
     <!-- task list -->
     <div class="task-list" v-if="filter === 'all'">
-      <p>You have {{ totalCount }} tasks left to do</p>
+      <div class="aligneItems">
+        <p>You have {{ totalCount }} tasks left to do</p>
+        <SelectOptions :filter="filter" @selectOption="selectFilter" />
+      </div>
       <div v-for="task in tasks" :key="task.id">
         <TaskDetails :task="task" />
       </div>
     </div>
 
     <div class="task-list" v-if="filter === 'favs'">
-      <p>You have {{ favCount }} favs left to do</p>
+      <div class="aligneItems">
+        <p>You have {{ favCount }} favorite(s) left to do</p>
+        <SelectOptions :filter="filter" @selectOption="selectFilter" />
+      </div>
       <div v-for="task in favs" :key="task.id">
         <TaskDetails :task="task" />
       </div>
     </div>
+    <!-- reset -->
+    <nav class="filter">
+      <button @click="taskStore.$reset">reset state</button>
+    </nav>
   </main>
 </template>
 <script setup>
@@ -39,6 +44,7 @@ import { useTaskStore } from "./stores/TaskStore";
 import TaskDetails from "./components/TaskDetails.vue";
 import { ref } from "vue";
 import TaskForm from "./components/TaskForm.vue";
+import SelectOptions from "./components/SelectOptions.vue";
 
 const taskStore = useTaskStore();
 const { tasks, loading, favs, totalCount, favCount } = storeToRefs(taskStore);
@@ -46,6 +52,9 @@ const { tasks, loading, favs, totalCount, favCount } = storeToRefs(taskStore);
 // fetch tasks
 taskStore.getTasks();
 const filter = ref("all");
+const selectFilter = (selected) => {
+  filter.value = selected.value;
+};
 </script>
 
 <style scoped></style>
