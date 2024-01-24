@@ -7,7 +7,8 @@
 <script setup>
 import { useTaskStore } from "@/stores/TaskStore";
 import { ref } from "vue";
-
+// import { doc, setDoc } from "firebase/firestore";
+// import { db, auth } from "../firebase";
 const taskStore = useTaskStore();
 const newTask = ref("");
 const handleSubmit = () => {
@@ -15,7 +16,6 @@ const handleSubmit = () => {
     taskStore.addTask({
       title: newTask.value,
       isFav: false,
-      id: Math.floor(Math.random() * 100000),
     });
   }
   newTask.value = "";

@@ -1,7 +1,7 @@
 // router/index.js
 import { createRouter, createWebHistory } from "vue-router";
 import SignIn from "@/views/SignIn.vue";
-import SignUp from "@/views/SignUp.vue";
+import TaskPage from "@/views/TaskPage.vue";
 import NotFound from "@/views/NotFound.vue";
 
 const routes = [
@@ -11,9 +11,14 @@ const routes = [
     component: SignIn,
   },
   {
-    path: "/auth",
+    path: "/register",
     name: "SignUp",
-    component: SignUp,
+    component: SignIn,
+  },
+  {
+    path: "/user",
+    name: "TaskPage",
+    component: TaskPage,
   },
   {
     path: "/:catchAll(.*)",

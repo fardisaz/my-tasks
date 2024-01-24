@@ -1,11 +1,8 @@
 <template>
   <div>
-    <div v-if="user">
-      {{ user?.email }}<button @click="signout">Sign out</button>
-    </div>
     <form @submit.prevent="handleSubmit" class="checkout-form">
       <div>
-        <h1>Sign In to handle your daily tasks</h1>
+        <h1>Sign In To Manage Your Daily Tasks</h1>
         <div>
           <label for="email">Email</label>
           <input type="email" id="email" v-model="data.email" required />
@@ -36,14 +33,33 @@
   </div>
 </template>
 <script setup>
-import { auth } from "../firebase/index.js";
+import { auth } from "../firebase.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
   onAuthStateChanged,
 } from "firebase/auth";
 import { ref } from "vue";
+import router from "@/router";
+import { toast } from "vue3-toastify";
+const success = () => {
+  toast("You are a member now 🥳", {
+    autoClose: 3000,
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
+const errorRegister = () => {
+  toast("You need a better password !", {
+    autoClose: 3000,
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
+const errorLogin = () => {
+  toast("Your email or password is invalid !", {
+    autoClose: 3000,
+    position: toast.POSITION.TOP_RIGHT,
+  });
+};
 
 const mode = ref("login");
 const user = ref(null);
@@ -53,17 +69,31 @@ const data = ref({
 });
 const toggleMode = (val) => {
   mode.value = val;
+  if (val == "register") {
+    router.push({ name: "SignUp" });
+  }
 };
-const login = async (email, password) => {};
-const register = async (email, password) => {
-  await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed up
-      const user = userCredential.user;
-      console.log("this is the user: ", user);
-      // ...
+const login = async (email, password) => {
+  await signInWithEmailAndPassword(auth, email, password)
+    .then((res) => {
+      console.log(res);
+      router.push({ name: "TaskPage" });
     })
     .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      errorLogin();
+      console.log(errorCode, errorMessage);
+    });
+};
+const register = async (email, password) => {
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then((res) => {
+      success();
+      router.push({ name: "SignIn" });
+    })
+    .catch((error) => {
+      errorRegister();
       const errorCode = error.code;
       const errorMessage = error.message;
       // ..
@@ -74,4 +104,9 @@ const handleSubmit = () => {
   let password = data.value.password;
   mode.value === "login" ? login(email, password) : register(email, password);
 };
+
+onAuthStateChanged(auth, (currentUser) => {
+  user.value = currentUser;
+});
 </script>
+<style></style>
