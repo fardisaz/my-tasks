@@ -42,6 +42,8 @@ import {
 import { ref } from "vue";
 import router from "@/router";
 import { toast } from "vue3-toastify";
+import { useTaskStore } from "../stores/TaskStore";
+const taskStore = useTaskStore();
 const success = () => {
   toast("You are a member now 🥳", {
     autoClose: 3000,
@@ -89,6 +91,7 @@ const login = async (email, password) => {
 const register = async (email, password) => {
   await createUserWithEmailAndPassword(auth, email, password)
     .then((res) => {
+      taskStore.addUser();
       success();
       router.push({ name: "SignIn" });
     })

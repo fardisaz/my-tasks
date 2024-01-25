@@ -7,8 +7,7 @@
 <script setup>
 import { useTaskStore } from "@/stores/TaskStore";
 import { ref } from "vue";
-// import { doc, setDoc } from "firebase/firestore";
-// import { db, auth } from "../firebase";
+
 const taskStore = useTaskStore();
 const newTask = ref("");
 const handleSubmit = () => {

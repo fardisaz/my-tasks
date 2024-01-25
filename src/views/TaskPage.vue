@@ -1,6 +1,5 @@
 <template>
   <main>
-    <div><button @click="signout">Sign out</button></div>
     <!-- heading -->
     <header>
       <img src="../assets/Pinialogo.svg" alt="pinia logo" />
@@ -38,9 +37,7 @@
       <p>{{ newTasks }}</p>
       <!-- reset -->
       <nav class="filter">
-        <button v-show="tasks?.length > 0" @click="taskStore.$reset">
-          reset state
-        </button>
+        <button @click="signout">Sign out</button>
       </nav>
     </div>
   </main>
@@ -50,7 +47,7 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useTaskStore } from "../stores/TaskStore";
 import TaskDetails from "../components/TaskDetails.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import TaskForm from "../components/TaskForm.vue";
 import SelectOptions from "../components/SelectOptions.vue";
 import { auth } from "../firebase.js";
@@ -61,17 +58,15 @@ const { favs, totalCount, favCount } = storeToRefs(taskStore);
 
 // fetch tasks
 onAuthStateChanged(auth, (currentUser) => {
-  taskStore.addId(currentUser.uid);
-  taskStore.getTasks();
+  taskStore.getUser();
 });
-// taskStore.addId(auth.currentUser.uid);
 
 const filter = ref("all");
 const selectFilter = (selected) => {
   filter.value = selected.value;
 };
-const signout = async () => {
-  await signOut(auth)
+const signout = () => {
+  signOut(auth)
     .then((res) => {
       router.push({ name: "SignIn" });
     })
