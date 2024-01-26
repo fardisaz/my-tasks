@@ -30,7 +30,7 @@ export const useTaskStore = defineStore("taskStore", {
       setDoc(userRef, { tasks: [] }, { merge: true });
     },
     async getUser() {
-      const userRef = doc(db, "users", auth.currentUser.uid);
+      const userRef = doc(db, "users", auth?.currentUser?.uid);
       const docSnap = await getDoc(userRef);
       this.user = {
         id: auth.currentUser.uid,

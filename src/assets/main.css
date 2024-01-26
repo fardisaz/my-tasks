@@ -81,14 +81,14 @@ header h1 {
   background: #e7e7e7;
   padding: 20px 0;
 }
-form {
+.task-form {
   max-width: 400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 10px;
 }
-form button {
+.taskpage-button {
   background: #ffd859;
   border: 0;
   padding: 10px;
@@ -116,4 +116,34 @@ form input {
 }
 .aligneItems {
   display: flex;
+}
+.checkout-form {
+  text-align: center;
+}
+.signInlabel {
+  margin: 2rem 1rem;
+}
+#email,
+#password {
+  margin-bottom: 1rem;
+}
+.signin-button {
+  background: #ffd859;
+  border: 0;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1em;
+  width: 11.5rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+.log-link {
+  color: rgb(37, 149, 186);
+  cursor: pointer;
+}
+.log-link:hover {
+  font-weight: bold;
 }

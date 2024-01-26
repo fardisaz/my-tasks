@@ -47,17 +47,15 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useTaskStore } from "../stores/TaskStore";
 import TaskDetails from "../components/TaskDetails.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import TaskForm from "../components/TaskForm.vue";
 import SelectOptions from "../components/SelectOptions.vue";
 import { auth } from "../firebase.js";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import router from "@/router";
 const taskStore = useTaskStore();
 const { favs, totalCount, favCount } = storeToRefs(taskStore);
-
-// fetch tasks
-onAuthStateChanged(auth, (currentUser) => {
+onMounted(() => {
   taskStore.getUser();
 });
 

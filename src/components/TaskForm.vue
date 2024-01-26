@@ -1,7 +1,7 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit" class="task-form">
     <input type="text" placeholder="I need to ..." v-model="newTask" />
-    <button>Add</button>
+    <button class="taskpage-button">Add</button>
   </form>
 </template>
 <script setup>

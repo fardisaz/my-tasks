@@ -3,29 +3,37 @@
     <form @submit.prevent="handleSubmit" class="checkout-form">
       <div>
         <h1>Sign In To Manage Your Daily Tasks</h1>
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="data.email" required />
+        <div style="margin-top: 8rem; margin-right: 4rem">
+          <div>
+            <label for="email" class="signInlabel">Email</label>
+            <input type="email" id="email" v-model="data.email" required />
+          </div>
+          <div>
+            <label for="password" style="margin-left: -1rem; margin-right: 1rem"
+              >Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              v-model="data.password"
+              required
+            />
+          </div>
         </div>
         <div>
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            v-model="data.password"
-            required
-          />
-        </div>
-        <div>
-          <button type="submit">
+          <button class="signin-button" type="submit">
             {{ mode === "login" ? "Login" : "Register" }}
           </button>
-          <div @click="toggleMode(mode === 'login' ? 'register' : 'login')">
-            {{
-              mode === "login"
-                ? "Not a user? Register"
-                : "Already the user? Login"
-            }}
+          <div>
+            {{ mode === "login" ? "Not a user?" : "Already the user?" }}
+            <a
+              v-if="mode === 'login'"
+              class="log-link"
+              @click="toggleMode('register')"
+            >
+              Register</a
+            >
+            <a v-else class="log-link" @click="toggleMode('login')"> Login</a>
           </div>
         </div>
       </div>
@@ -93,7 +101,10 @@ const register = async (email, password) => {
     .then((res) => {
       taskStore.addUser();
       success();
-      router.push({ name: "SignIn" });
+      setTimeout(() => {
+        mode.value = "login";
+        router.push({ name: "SignIn" });
+      }, 4000);
     })
     .catch((error) => {
       errorRegister();
